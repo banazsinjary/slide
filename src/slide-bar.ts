@@ -16,7 +16,7 @@ export interface TopTab {
 export class SlideBar extends LitElement {
   @property({ type: Array }) entries: TopTab[] = [];
 
-  @property({ type: String }) title = 'hello';
+  @property({ type: String }) title = 'Hey There';
 
   @property({ type: Number }) counter = 0;
 
