@@ -10,4 +10,16 @@ describe('SlideBar', () => {
     const list = el.shadowRoot?.querySelector('ul');
     expect(list).to.exist;
   });
+
+  it('has a list tag', async () => {
+    const el = await fixture<SlideBar>(
+      html`<slide-bar
+          .entries=${[{ displayName: 'UPLOADS' }, { displayName: 'POSTS' }]}
+        ></slide-bar
+        >>`
+    );
+
+    const list = el.shadowRoot?.querySelectorAll('li');
+    expect(list?.length).to.equal(2);
+  });
 });
