@@ -1,1 +1,1 @@
-export { YourWebComponent } from './src/your-webcomponent';
+export { SlideBar as YourWebComponent } from './src/slide-bar';
