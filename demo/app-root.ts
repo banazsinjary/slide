@@ -14,15 +14,28 @@ export class AppRoot extends LitElement {
     this.slideBar.entries = [
       { displayName: 'CHANGE' },
       { displayName: 'TITLE' },
+      { displayName: 'OPTIONS' },
+      { displayName: 'ACITIVE' },
     ];
+  }
+
+  private loadControl() {
+    console.log(this.slideBar.isLoading);
+    this.slideBar.isLoading = !this.slideBar.isLoading;
   }
 
   render() {
     return html`
-      <button @click=${this.doSomething}>Click me</button>
+      <button @click=${this.doSomething}>change options</button>
+      <button @click=${this.loadControl}>load on/off</button>
       <slide-bar
         @itemclicked=${this.itemClicked}
-        .entries=${[{ displayName: 'UPLOADS' }, { displayName: 'POSTS' }]}
+        .entries=${[
+          { displayName: 'UPLOADS' },
+          { displayName: 'POSTS' },
+          { displayName: 'REVIEWS' },
+          { displayName: 'COLLECTIONS' },
+        ]}
       >
       </slide-bar>
     `;
