@@ -5,6 +5,9 @@ import {
   property,
   customElement,
   query,
+  queryAll,
+  PropertyValues,
+  internalProperty,
 } from 'lit-element';
 import { nothing } from 'lit-html';
 import './slide-bar-loading-dots';
@@ -24,9 +27,13 @@ export class SlideBar extends LitElement {
 
   @property({ type: Number }) selectedIndex = 0;
 
-  @property({ type: Boolean }) isLoading = true;
+  @property({ type: Boolean }) isLoading = false;
+
+  @internalProperty() firstAnimationLine = false;
 
   @query('.headD') container!: HTMLDivElement;
+
+  @queryAll('button') listOfButtons!: HTMLButtonElement[];
 
   private itemClicked(e: Event, index: number) {
     console.log(
@@ -34,11 +41,6 @@ export class SlideBar extends LitElement {
       (e.target as HTMLButtonElement).getBoundingClientRect(),
       index
     );
-    const boundingRect = (e.target as HTMLButtonElement).getBoundingClientRect();
-    const containerRect = this.container.getBoundingClientRect();
-    const containerDiff = boundingRect.x - containerRect.x;
-    this.style.setProperty('--underlineLeftPosition', `${containerDiff}px`);
-    this.style.setProperty('--underlineWidth', `${boundingRect.width}px`);
 
     const event = new CustomEvent('itemclicked', {
       detail: {
@@ -47,37 +49,67 @@ export class SlideBar extends LitElement {
     });
     this.selectedIndex = index;
     this.dispatchEvent(event);
+    this.firstAnimationLine = true;
+  }
+
+  private indexChanged() {
+    const buttonSelected = this.listOfButtons[this.selectedIndex];
+
+    const boundingRect = buttonSelected.getBoundingClientRect();
+    const containerRect = this.container.getBoundingClientRect();
+    const containerDiff = boundingRect.x - containerRect.x;
+    this.style.setProperty('--underlineLeftPosition', `${containerDiff}px`);
+    this.style.setProperty('--underlineWidth', `${boundingRect.width}px`);
+  }
+
+  updated(changed: PropertyValues) {
+    if (changed.has('selectedIndex')) {
+      this.indexChanged();
+    }
+  }
+
+  firstUpdated() {
+    console.log(this.selectedIndex);
   }
 
   render() {
     return html`
       <div class="headD">
-        <ul class="headding">
-          ${this.entries.map(
-            (entry, index) =>
-              html`
-                <li>
-                  <button
-                    @click=${(e: Event) => this.itemClicked(e, index)}
-                    class=${index === this.selectedIndex ? 'active' : ''}
-                  >
-                    ${entry.displayName}
-                  </button>
-                </li>
-              `
-          )}
-          ${this.isLoading
-            ? html`<div id="loadingState">
-                <slide-bar-loading-dots></slide-bar-loading-dots>
-              </div>`
-            : nothing}
-        </ul>
-        <div id="underLine"></div>
+        <div class="horizontalScroll">
+          <ul class="headding">
+            ${this.entries.map(
+              (entry, index) =>
+                html`
+                  <li>
+                    <button
+                      @click=${(e: Event) => this.itemClicked(e, index)}
+                      class=${index === this.selectedIndex ? 'active' : ''}
+                    >
+                      ${entry.displayName}
+                    </button>
+                  </li>
+                `
+            )}
+            ${this.isLoading
+              ? html`<div id="loadingState">
+                  <slide-bar-loading-dots></slide-bar-loading-dots>
+                </div>`
+              : nothing}
+          </ul>
+          <div
+            class=${this.firstAnimationLine === true ? 'underLine' : nothing}
+          ></div>
+        </div>
       </div>
     `;
   }
 
   static styles = css`
+    .horizontalScroll {
+      padding-bottom: 10px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
     .spinnyCircle {
       display: inline-block;
       position: relative;
@@ -144,7 +176,7 @@ export class SlideBar extends LitElement {
       color: white;
     }
 
-    #underLine {
+    .underLine {
       position: relative;
       width: var(--underlineWidth, 0px);
       height: 5px;
@@ -157,15 +189,16 @@ export class SlideBar extends LitElement {
     }
 
     .headD {
-      background-color: #00468b;
+      background-color: #a38064;
       height: 70px;
+      width: 100%;
       padding-top: 10px;
       color: white;
       font-size: 18px;
     }
     .headD ul {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       margin-bottom: 0;
       padding-left: 10;
     }
@@ -185,11 +218,12 @@ export class SlideBar extends LitElement {
       background: none;
       border: none;
       display: inline;
-      color: #d7dce2;
-      background-color: #00468b;
+      color: #e9ecf0;
+      background-color: #a38064;
       font-size: 15px;
       font-family: Arial, Helvetica, sans-serif;
       padding: 10px;
+      white-space: nowrap;
     }
     :host {
       display: block;

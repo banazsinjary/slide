@@ -55,4 +55,31 @@ describe('SlideBar', () => {
     await el.updateComplete;
     expect(button?.classList.contains('active')).to.be.true;
   });
+
+  describe('LoadingState', () => {
+    it('produces loading state when button is set to true', async () => {
+      const el = await fixture<SlideBar>(
+        html`<slide-bar ?isLoading=${true}></slide-bar>`
+      );
+
+      const loader = el.shadowRoot?.querySelector('#loadingState');
+      expect(loader).to.exist;
+    });
+
+    it('doesnt produce loading state when button is set to false', async () => {
+      const el = await fixture<SlideBar>(
+        html`<slide-bar ?isLoading=${false}></slide-bar>`
+      );
+
+      const loader = el.shadowRoot?.querySelector('#loadingState');
+      expect(loader).to.not.exist;
+    });
+
+    it('defaults to no loading state', async () => {
+      const el = await fixture<SlideBar>(html`<slide-bar></slide-bar>`);
+
+      const loader = el.shadowRoot?.querySelector('#loadingState');
+      expect(loader).to.not.exist;
+    });
+  });
 });

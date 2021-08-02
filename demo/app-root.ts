@@ -24,10 +24,15 @@ export class AppRoot extends LitElement {
     this.slideBar.isLoading = !this.slideBar.isLoading;
   }
 
+  private indexSelect() {
+    this.slideBar.selectedIndex = Math.floor(Math.random() * 6);
+  }
+
   render() {
     return html`
       <button @click=${this.doSomething}>change options</button>
       <button @click=${this.loadControl}>load on/off</button>
+      <button @click=${this.indexSelect}>index select</button>
       <slide-bar
         @itemclicked=${this.itemClicked}
         .entries=${[
@@ -35,6 +40,8 @@ export class AppRoot extends LitElement {
           { displayName: 'POSTS' },
           { displayName: 'REVIEWS' },
           { displayName: 'COLLECTIONS' },
+          { displayName: 'LOANS' },
+          { displayName: 'WEB ARCHIVE' },
         ]}
       >
       </slide-bar>
