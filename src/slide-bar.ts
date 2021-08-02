@@ -97,7 +97,9 @@ export class SlideBar extends LitElement {
               : nothing}
           </ul>
           <div
-            class=${this.firstAnimationLine === true ? 'underLine' : nothing}
+            class=${this.firstAnimationLine === true
+              ? 'animationUnderLine'
+              : 'underLine'}
           ></div>
         </div>
       </div>
@@ -177,6 +179,15 @@ export class SlideBar extends LitElement {
     }
 
     .underLine {
+      position: relative;
+      width: var(--underlineWidth, 0px);
+      height: 5px;
+      top: 0px;
+      left: var(--underlineLeftPosition, 0px);
+      background-color: white;
+    }
+
+    .animationUnderLine {
       position: relative;
       width: var(--underlineWidth, 0px);
       height: 5px;
