@@ -49,6 +49,9 @@ export class SlideBar extends LitElement {
         index,
       },
     });
+    const indexDistance = Math.abs(this.selectedIndex - index);
+    const animationTime = Math.min(0.25 * indexDistance, 0.5);
+    this.style.setProperty('--underlineAnimationDuration', `${animationTime}s`);
     this.selectedIndex = index;
     this.dispatchEvent(event);
     this.firstAnimationLine = true;
@@ -201,8 +204,7 @@ export class SlideBar extends LitElement {
     .underLine.animation {
       transition-property: left, width;
       transition-delay: 0;
-      transition-duration: 0.6s;
-      transition-timing-function: linear;
+      transition-duration: var(--underlineAnimationDuration, 0.6s);
     }
 
     .headD {
