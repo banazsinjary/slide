@@ -29,6 +29,8 @@ export class SlideBar extends LitElement {
 
   @property({ type: Boolean }) isLoading = false;
 
+  @property({ type: Number }) thickUnderLine = 2;
+
   @internalProperty() firstAnimationLine = false;
 
   @query('.headD') container!: HTMLDivElement;
@@ -62,9 +64,19 @@ export class SlideBar extends LitElement {
     this.style.setProperty('--underlineWidth', `${boundingRect.width}px`);
   }
 
+  private underlineThickness() {
+    this.style.setProperty('--underLineThick', `${this.thickUnderLine}px`);
+  }
+
+  increment() {
+    this.thickUnderLine += 1;
+    this.underlineThickness();
+  }
+
   updated(changed: PropertyValues) {
     if (changed.has('selectedIndex')) {
       this.indexChanged();
+      this.underlineThickness();
     }
   }
 
@@ -97,9 +109,7 @@ export class SlideBar extends LitElement {
               : nothing}
           </ul>
           <div
-            class=${this.firstAnimationLine === true
-              ? 'animationUnderLine'
-              : 'underLine'}
+            class="underLine ${this.firstAnimationLine ? 'animation' : nothing}"
           ></div>
         </div>
       </div>
@@ -181,22 +191,18 @@ export class SlideBar extends LitElement {
     .underLine {
       position: relative;
       width: var(--underlineWidth, 0px);
-      height: 5px;
+      height: var(--underLineThick, 0px);
       top: 0px;
       left: var(--underlineLeftPosition, 0px);
       background-color: white;
+      border-radius: 3px;
     }
 
-    .animationUnderLine {
-      position: relative;
-      width: var(--underlineWidth, 0px);
-      height: 5px;
-      top: 0px;
-      left: var(--underlineLeftPosition, 0px);
-      background-color: white;
+    .underLine.animation {
       transition-property: left, width;
-      transition-duration: 1s;
       transition-delay: 0;
+      transition-duration: 0.6s;
+      transition-timing-function: linear;
     }
 
     .headD {
