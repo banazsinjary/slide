@@ -28,17 +28,11 @@ export class AppRoot extends LitElement {
     this.slideBar.selectedIndex = Math.floor(Math.random() * 6);
   }
 
-  private underLineThicken() {
-    const component = this.shadowRoot?.querySelector('Slide-Bar') as SlideBar;
-    component.increment();
-  }
-
   render() {
     return html`
       <button @click=${this.doSomething}>change options</button>
       <button @click=${this.loadControl}>load on/off</button>
       <button @click=${this.indexSelect}>index select</button>
-      <button @click=${this.underLineThicken}>make line thiccc</button>
       <slide-bar
         @itemclicked=${this.itemClicked}
         .entries=${[
@@ -59,6 +53,10 @@ export class AppRoot extends LitElement {
       display: block;
       padding: 25px;
       color: var(--your-webcomponent-text-color, #000);
+    }
+
+    slide-bar {
+      --underLineThick: 3px;
     }
   `;
 }
