@@ -1,1 +1,1 @@
-export { SlideBar as YourWebComponent } from './src/slide-bar';
+export { UnderlinedTabBar as YourWebComponent } from './src/ia-underlined-tab-bar';

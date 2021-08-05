@@ -1,6 +1,6 @@
 import { html, css, LitElement, customElement } from 'lit-element';
 
-@customElement('slide-bar-loading-dots')
+@customElement('ia-underlined-tab-bar-loading-dots')
 export class LoadingDots extends LitElement {
   render() {
     return html`
