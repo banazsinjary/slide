@@ -1,17 +1,15 @@
 import { html, css, LitElement, customElement, query } from 'lit-element';
-import '../src/slide-bar';
-import type { SlideBar } from '../src/slide-bar';
+import '../src/ia-underlined-tab-bar';
+import type { UnderlinedTabBar } from '../src/ia-underlined-tab-bar';
 
 @customElement('app-root')
 export class AppRoot extends LitElement {
-  @query('slide-bar') slideBar!: SlideBar;
+  @query('ia-underlined-tab-bar') tabBar!: UnderlinedTabBar;
 
-  private itemClicked(e: CustomEvent) {
-    console.log('ahhhh', e, e.detail);
-  }
+  private itemClicked() {}
 
   private doSomething() {
-    this.slideBar.entries = [
+    this.tabBar.entries = [
       { displayName: 'CHANGE' },
       { displayName: 'TITLE' },
       { displayName: 'OPTIONS' },
@@ -20,12 +18,12 @@ export class AppRoot extends LitElement {
   }
 
   private loadControl() {
-    console.log(this.slideBar.isLoading);
-    this.slideBar.isLoading = !this.slideBar.isLoading;
+    console.log(this.tabBar.isLoading);
+    this.tabBar.isLoading = !this.tabBar.isLoading;
   }
 
   private indexSelect() {
-    this.slideBar.selectedIndex = Math.floor(Math.random() * 6);
+    this.tabBar.selectedIndex = Math.floor(Math.random() * 6);
   }
 
   render() {
@@ -33,7 +31,7 @@ export class AppRoot extends LitElement {
       <button @click=${this.doSomething}>change options</button>
       <button @click=${this.loadControl}>load on/off</button>
       <button @click=${this.indexSelect}>index select</button>
-      <slide-bar
+      <ia-underlined-tab-bar
         @itemclicked=${this.itemClicked}
         .entries=${[
           { displayName: 'UPLOADS' },
@@ -44,7 +42,7 @@ export class AppRoot extends LitElement {
           { displayName: 'WEB ARCHIVE' },
         ]}
       >
-      </slide-bar>
+      </ia-underlined-tab-bar>
     `;
   }
 
@@ -55,8 +53,8 @@ export class AppRoot extends LitElement {
       color: var(--your-webcomponent-text-color, #000);
     }
 
-    slide-bar {
-      --underLineThick: 3px;
+    ia-underlined-tab-bar {
+      --underLineThick: 5px;
     }
   `;
 }
