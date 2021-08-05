@@ -26,7 +26,7 @@ export class LoadingDots extends LitElement {
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: #d7dce2;
+      background: #eef0f1;
       animation-timing-function: cubic-bezier(0, 1, 1, 0);
     }
     .spinnyCircle div:nth-child(1) {

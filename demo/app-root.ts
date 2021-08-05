@@ -26,11 +26,28 @@ export class AppRoot extends LitElement {
     this.tabBar.selectedIndex = Math.floor(Math.random() * 6);
   }
 
+  private underlineWideInc() {
+    const component = this.shadowRoot?.querySelector(
+      'ia-underlined-tab-bar'
+    ) as UnderlinedTabBar;
+    component.increment();
+  }
+
+  private underlineWideDec() {
+    const component = this.shadowRoot?.querySelector(
+      'ia-underlined-tab-bar'
+    ) as UnderlinedTabBar;
+    component.decrement();
+  }
+
   render() {
     return html`
       <button @click=${this.doSomething}>change options</button>
       <button @click=${this.loadControl}>load on/off</button>
       <button @click=${this.indexSelect}>index select</button>
+      <button @click=${this.underlineWideInc}>line width increase</button>
+      <button @click=${this.underlineWideDec}>line width decrease</button>
+
       <ia-underlined-tab-bar
         @itemclicked=${this.itemClicked}
         .entries=${[

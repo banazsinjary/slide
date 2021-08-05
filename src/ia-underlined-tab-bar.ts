@@ -28,7 +28,7 @@ export class UnderlinedTabBar extends LitElement {
 
   @property({ type: Number }) selectedIndex = 0;
 
-  @property({ type: Number }) widthMultiplier = 0.5;
+  @property({ type: Number }) widthMultiplier = 0.8;
 
   @property({ type: Boolean }) isLoading = false;
 
@@ -37,6 +37,14 @@ export class UnderlinedTabBar extends LitElement {
   @query('.horizontalScroll') container!: HTMLDivElement;
 
   @queryAll('button') listOfButtons!: HTMLButtonElement[];
+
+  increment() {
+    this.widthMultiplier += 0.1;
+  }
+
+  decrement() {
+    this.widthMultiplier -= 0.1;
+  }
 
   private itemClicked(e: Event, index: number) {
     const event = new CustomEvent('itemclicked', {
@@ -120,7 +128,7 @@ export class UnderlinedTabBar extends LitElement {
         width: 65px;
         height: 17px;
         background-color: none;
-        margin-top: 9px;
+        margin-top: 12px;
         margin-left: 10px;
         color: white;
       }
