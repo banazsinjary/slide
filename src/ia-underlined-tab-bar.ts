@@ -38,14 +38,6 @@ export class UnderlinedTabBar extends LitElement {
 
   @queryAll('button') listOfButtons!: HTMLButtonElement[];
 
-  increment() {
-    this.widthMultiplier += 0.1;
-  }
-
-  decrement() {
-    this.widthMultiplier -= 0.1;
-  }
-
   private itemClicked(e: Event, index: number) {
     const event = new CustomEvent('itemclicked', {
       detail: {
@@ -60,7 +52,7 @@ export class UnderlinedTabBar extends LitElement {
     this.firstAnimationLine = true;
   }
 
-  private indexChanged() {
+  private updateUnderline() {
     const buttonSelected = this.listOfButtons[this.selectedIndex];
 
     const boundingRect = buttonSelected.getBoundingClientRect();
@@ -76,9 +68,17 @@ export class UnderlinedTabBar extends LitElement {
     this.style.setProperty('--underlineWidth', `${lineWidth}px`);
   }
 
+  increment() {
+    this.widthMultiplier += 0.1;
+  }
+
+  decrement() {
+    this.widthMultiplier -= 0.1;
+  }
+
   updated(changed: PropertyValues) {
-    if (changed.has('selectedIndex')) {
-      this.indexChanged();
+    if (changed.has('selectedIndex') || changed.has('widthMultiplier')) {
+      this.updateUnderline();
     }
   }
 
@@ -156,6 +156,7 @@ export class UnderlinedTabBar extends LitElement {
         padding-top: 10px;
         color: white;
         font-size: 18px;
+        margin-top: 5px;
       }
       .headD ul {
         display: flex;
