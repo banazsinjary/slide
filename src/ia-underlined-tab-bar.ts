@@ -54,7 +54,7 @@ export class UnderlinedTabBar extends LitElement {
 
   private updateUnderline() {
     const buttonSelected = this.listOfButtons[this.selectedIndex];
-
+    if (!buttonSelected) return;
     const boundingRect = buttonSelected.getBoundingClientRect();
     const containerRect = this.container.getBoundingClientRect();
     const containerDiff = boundingRect.x - containerRect.x;
