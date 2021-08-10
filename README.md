@@ -2,20 +2,65 @@
 
 # \<underlined-tab-bar>
 
-![Underline Tab Bar](.main/img/underline.png "Underline Tab Bar")
+![Underline Tab Bar](img/underline.png "Underline Tab Bar")
 
 ## Installation
 
 ```bash
 yarn add @internetarchive/underlined-tab-bar
 ```
-## Usage
+## Basic Usage
 
-```bash
-:)
+```js
+<script>
+import '@internetarchive/underlined-tab-bar';
+</script>
+
+<ia-underlined-tab-bar
+        onitemclicked="itemClicked()"
+        entries="[
+          { displayName: 'UPLOADS' },
+          { displayName: 'POSTS' },
+          { displayName: 'REVIEWS' },
+          { displayName: 'COLLECTIONS' },
+          { displayName: 'LOANS' },
+          { displayName: 'WEB ARCHIVE' },
+        ]"
+      >
+      </ia-underlined-tab-bar>
+<script>      
+function itemClicked(e) {
+    console.log(e.detail.index);
+  }
+</script>
+  
 ```
 
+## Advanced Usage
+```js
+// turn on loading state
+const tabBar = document.querySelector('underlined-tab-bar');
+tabBar.isLoading = true;
 
+// resize underline
+  tabBar.widthMultiplier=0.8;
+
+// select an index
+  tabBar.selectedIndex = 3;
+
+```
+
+see unit tests in example app for more usage examples
+
+### CSS Variables
+```css
+<style>
+//underline thickness
+  ia-underlined-tab-bar {
+      --underLineThick: 5px;
+    }
+</style>
+```
 
 ## Local Demo with `web-dev-server`
 ```bash

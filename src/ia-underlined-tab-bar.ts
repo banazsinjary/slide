@@ -68,14 +68,6 @@ export class UnderlinedTabBar extends LitElement {
     this.style.setProperty('--underlineWidth', `${lineWidth}px`);
   }
 
-  increment() {
-    this.widthMultiplier += 0.1;
-  }
-
-  decrement() {
-    this.widthMultiplier -= 0.1;
-  }
-
   updated(changed: PropertyValues) {
     if (changed.has('selectedIndex') || changed.has('widthMultiplier')) {
       this.updateUnderline();

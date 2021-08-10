@@ -6,7 +6,10 @@ import type { UnderlinedTabBar } from '../src/ia-underlined-tab-bar';
 export class AppRoot extends LitElement {
   @query('ia-underlined-tab-bar') tabBar!: UnderlinedTabBar;
 
-  private itemClicked() {}
+  private itemClicked(e: CustomEvent) {
+    console.log(e);
+    console.log(e.detail.index);
+  }
 
   private doSomething() {
     this.tabBar.entries = [
@@ -27,17 +30,11 @@ export class AppRoot extends LitElement {
   }
 
   private underlineWideInc() {
-    const component = this.shadowRoot?.querySelector(
-      'ia-underlined-tab-bar'
-    ) as UnderlinedTabBar;
-    component.increment();
+    this.tabBar.widthMultiplier += 0.1;
   }
 
   private underlineWideDec() {
-    const component = this.shadowRoot?.querySelector(
-      'ia-underlined-tab-bar'
-    ) as UnderlinedTabBar;
-    component.decrement();
+    this.tabBar.widthMultiplier -= 0.1;
   }
 
   render() {
